@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Bubu — your cycle, softly</title>
+<meta name="description" content="Track your period, fertile window and moods on a gentle, private cycle companion that stays on your device. End-to-end encrypted partner sync — the relay only ever sees scrambled bytes."/>
+<meta property="og:title" content="Bubu — your cycle, softly"/>
+<meta property="og:description" content="Track your period, fertile window and moods on a gentle, private cycle companion that stays on your device."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="theme-color" content="#FFF6F0"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<script>(function(){try{if(localStorage.getItem("bubu-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}})();</script>
+<style>
+:root{
+--bg:oklch(0.977 0.014 44);--fg:oklch(0.29 0.055 340);--card:oklch(0.995 0.006 40);
+--primary:oklch(0.56 0.14 6);--primary-fg:oklch(0.99 0.008 40);
+--muted:oklch(0.955 0.02 34);--muted-fg:oklch(0.505 0.045 344);
+--border:oklch(0.906 0.032 22);--blush:oklch(0.86 0.065 12);--blush-soft:oklch(0.945 0.03 16);
+--lav:oklch(0.76 0.09 305);--lav-soft:oklch(0.94 0.03 305);--star:oklch(0.89 0.1 88);
+--sky:oklch(0.85 0.06 235);--sky-deep:oklch(0.68 0.1 245);
+--period:oklch(0.62 0.17 12);--fertile:oklch(0.7 0.115 173);--ovu:oklch(0.78 0.135 78);--pms:oklch(0.72 0.105 302);
+--radius:20px;--sh:0 8px 22px -8px color-mix(in oklab,var(--primary) 24%,transparent);
+--sans:"Quicksand",ui-sans-serif,system-ui,sans-serif;--disp:"Baloo 2",ui-rounded,system-ui,sans-serif;
+}
+html.dark{
+--bg:oklch(0.168 0.016 58);--fg:oklch(0.947 0.014 88);--card:oklch(0.235 0.026 52);
+--primary:oklch(0.44 0.115 30);--primary-fg:oklch(0.955 0.022 86);
+--muted:oklch(0.265 0.022 54);--muted-fg:oklch(0.705 0.022 74);
+--border:oklch(0.62 0.06 66);--blush:oklch(0.55 0.08 22);--blush-soft:oklch(0.32 0.035 26);
+--lav:oklch(0.58 0.055 300);--lav-soft:oklch(0.3 0.028 300);--star:oklch(0.79 0.09 78);
+--sky:oklch(0.58 0.04 220);--sky-deep:oklch(0.44 0.05 230);
+--period:oklch(0.52 0.14 26);--fertile:oklch(0.5 0.07 156);--ovu:oklch(0.72 0.1 80);--pms:oklch(0.5 0.065 322);
+--radius:4px;--sh:0 14px 40px -22px color-mix(in oklab,var(--star) 20%,transparent);
+--sans:"EB Garamond",ui-serif,Georgia,serif;--disp:"Playfair Display",ui-serif,Georgia,serif;
+}
+*{box-sizing:border-box}html{-webkit-font-smoothing:antialiased}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;
+background-image:radial-gradient(120% 60% at 50% 0%,color-mix(in oklab,var(--blush) 35%,transparent) 0%,transparent 60%),linear-gradient(180deg,var(--bg) 0%,color-mix(in oklab,var(--muted) 55%,var(--bg)) 100%);background-attachment:fixed}
+html.dark body{background-image:radial-gradient(90% 45% at 50% -4%,color-mix(in oklab,var(--star) 16%,transparent) 0%,transparent 60%),linear-gradient(180deg,color-mix(in oklab,var(--card) 45%,var(--bg)) 0%,oklch(0.125 0.014 52) 100%);font-size:1.04rem;letter-spacing:.006em;line-height:1.65}
+html.dark body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;background-image:url("vintage-plate.jpg");background-size:cover;z-index:0}
+h1,h2{font-family:var(--disp);letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
+#preloader{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+#preloader .bar{width:120px;height:2px;background:var(--border);overflow:hidden;border-radius:99px}
+#preloader .bar i{display:block;height:100%;width:100%;background:var(--primary);transform:scaleX(0);transform-origin:left}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+nav.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px)}
+.nav-in{max-width:1120px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
+.dot{width:6px;height:6px;border-radius:99px;background:var(--primary);display:inline-block}
+.links{display:none;align-items:center;gap:20px;font-size:14px}
+.links a{color:var(--muted-fg);text-decoration:none;white-space:nowrap}
+@media(min-width:1024px){.links{display:flex}}
+.iconbtn{display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:var(--card);border:1px solid var(--border);color:var(--fg);cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 24px;border-radius:999px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;text-decoration:none;border:1px solid transparent}
+html.dark .btn{border-color:color-mix(in oklab,var(--star) 55%,transparent);outline:1px solid color-mix(in oklab,var(--star) 16%,transparent);outline-offset:2px}
+.btn2{display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:999px;background:var(--card);color:var(--fg);font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--border)}
+.hero-grid{display:grid;gap:32px;padding:40px 0 24px;position:relative}
+@media(min-width:1024px){.hero-grid{grid-template-columns:1fr 1fr;align-items:center;padding-top:64px}}
+h1.hero-h{font-size:clamp(48px,7vw,56px);margin:16px 0 0}
+.sub{margin-top:14px;max-width:38ch;color:var(--muted-fg)}
+.cta-row{margin-top:22px;display:flex;gap:8px;flex-wrap:wrap}
+.blob{position:absolute;left:50%;top:2%;width:min(820px,120vw);height:560px;transform:translateX(-50%);border-radius:60% 40% 55% 45%/45% 55% 40% 60%;background:linear-gradient(135deg,var(--blush),var(--lav-soft),var(--sky));opacity:.5;filter:blur(42px);pointer-events:none}
+html.dark .blob{background:linear-gradient(135deg,color-mix(in oklab,var(--primary) 30%,transparent),color-mix(in oklab,var(--star) 14%,transparent),color-mix(in oklab,var(--sky-deep) 24%,transparent))}
+.phone{position:relative;margin:0 auto;width:min(86%,320px);border:8px solid #2b2230;border-radius:36px;background:#2b2230;padding:0;box-shadow:0 20px 60px -20px rgba(0,0,0,.35);overflow:hidden}
+html.dark .phone{border-color:var(--card);background:var(--card)}
+.phone img{display:block;width:100%;height:auto;border-radius:28px}
+.notch{position:absolute;left:50%;top:0;height:20px;width:80px;transform:translateX(-50%);border-radius:0 0 16px 16px;background:#2b2230;z-index:2}
+.trust{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--card) 55%,transparent);position:relative;z-index:1;text-align:center;padding:18px 20px}
+.trust p{margin:0;font-family:var(--disp);font-size:17px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--sh);position:relative;z-index:1}
+html.dark .card{border:1px solid color-mix(in oklab,var(--star) 42%,transparent);box-shadow:0 0 0 1px oklch(0.1 0.015 54 / 0.7),0 22px 50px -30px color-mix(in oklab,var(--star) 20%,transparent)}
+.sec{max-width:1120px;margin:0 auto;padding:36px 20px;position:relative;z-index:1}
+.sec h2{font-size:24px;margin:4px 0 0}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-fg)}
+.tour{display:grid;gap:8px;margin-top:20px}
+.tour-phone{order:-1;display:flex;justify-content:center;position:relative}
+.tour-phone::before{content:"";position:absolute;left:50%;top:50%;width:min(110%,560px);height:72%;transform:translate(-50%,-50%);background:radial-gradient(closest-side,color-mix(in oklab,var(--blush) 55%,transparent),transparent);filter:blur(48px);pointer-events:none}
+html.dark .tour-phone::before{background:radial-gradient(closest-side,color-mix(in oklab,var(--star) 20%,transparent),transparent)}
+.giant{position:relative;width:min(100%,300px);border-radius:44px;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:0 40px 80px -32px rgba(0,0,0,.45)}
+html.dark .giant{border-color:color-mix(in oklab,var(--star) 42%,transparent);box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 60px -20px color-mix(in oklab,var(--star) 25%,transparent)}
+.giant img{display:block;width:100%;height:auto}
+.giant .gB{position:absolute;inset:0;opacity:0}
+.tour-step{display:flex;flex-direction:column;justify-content:center;padding:28px 4px;opacity:1}
+.tour-step.active{opacity:1}
+.tour-step .n{font-family:ui-monospace,monospace;font-size:11px;color:var(--muted-fg);letter-spacing:.14em}
+.tour-step h3{font-family:var(--disp);font-size:clamp(26px,4vw,34px);margin:6px 0 0}
+@media(min-width:900px){
+.tour{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:start}
+.tour-phone{position:sticky;top:84px;order:0;align-self:start}
+.tour-phone .giant{width:auto;height:min(80dvh,780px);aspect-ratio:780/1688;max-width:100%}
+.tour-phone .giant img{height:100%;object-fit:cover}
+.tour-step{min-height:78vh;opacity:.4;transition:opacity .3s ease}
+}
+@media (prefers-reduced-motion:reduce){.tour-step{opacity:1;min-height:auto;padding:28px 4px}.tour-phone{position:static}}
+.steps{display:grid;gap:12px;margin-top:12px}
+@media(min-width:1024px){.steps{grid-template-columns:1fr 1fr}.why{grid-template-columns:1fr 1fr 1fr}}
+.why{display:grid;gap:12px;margin-top:12px}
+footer{border-top:1px solid var(--border);position:relative;z-index:1}
+.foot-in{max-width:1120px;margin:0 auto;padding:24px 20px;display:flex;flex-direction:column;gap:8px}
+@media(min-width:640px){.foot-in{flex-direction:row;align-items:center;justify-content:space-between}}
+.mono{font-family:ui-monospace,monospace;font-size:11px;color:var(--muted-fg)}
+.stickybar{position:sticky;bottom:0;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:12px 20px calc(12px + env(safe-area-inset-bottom));z-index:20}
+.stickybar a{display:flex;height:48px;align-items:center;justify-content:center;gap:8px;border-radius:999px;background:var(--primary);color:var(--primary-fg);font-weight:600;text-decoration:none;max-width:430px;margin:0 auto}
+.split-mask{display:inline-block;overflow:hidden;vertical-align:bottom}
+.split-w{display:inline-block;will-change:transform,opacity,filter}
+@media (prefers-reduced-motion:reduce){[data-stack-card]{position:static;margin-bottom:24px}}
+@font-face{font-family:'Quicksand';font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/Quicksand-normal-500-latin.woff2") format('woff2')}
+@font-face{font-family:'Baloo 2';font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/Baloo2-normal-700-latin.woff2") format('woff2')}
+@font-face{font-family:'EB Garamond';font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/EBGaramond-normal-500-latin.woff2") format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/PlayfairDisplay-normal-600-latin.woff2") format('woff2')}
+a.btn,a.btn2,button{cursor:pointer;touch-action:manipulation}
+a.btn,a.btn2{transition:transform .2s ease-out,box-shadow .2s ease-out}
+a.btn:hover{transform:translateY(-1px)}
+a.btn:active,a.btn2:active{transform:scale(.98)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:0;background:var(--primary);color:var(--primary-fg);padding:10px 18px;border-radius:0 0 12px 0;font-weight:700;z-index:200;text-decoration:none}
+.skip:focus{left:0}
+</style>
+<noscript><style>#preloader{display:none}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#screens">Skip to screens</a>
+<div id="preloader" aria-hidden="true"><span class="pill"><span class="dot"></span> Bubu</span><div class="bar"><i id="preBar"></i></div></div>
+<nav class="top"><div class="nav-in">
+<span class="pill"><span class="dot"></span> Bubu</span>
+<span class="links"><a href="#screens">Screens</a><a href="#how">How to use</a><a href="#why">Why Bubu</a></span>
+<span style="display:flex;gap:8px;align-items:center">
+<button class="iconbtn" id="themeBtn" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+<a class="btn" style="height:44px" href="bubu.apk" download>Download</a>
+</span></div></nav>
+<div class="wrap">
+<section class="hero-grid" data-parallax-section>
+<div class="blob" data-parallax-layer data-speed="-0.18" aria-hidden="true"></div>
+<div>
+<p class="pill">Bubu — your cycle, softly</p>
+<h1 class="hero-h" data-split-reveal>Your cycle, soft and shared.</h1>
+<p class="sub">Private by design, on your device. Track period, fertile window and moods. Sync the full diary with a partner (view-only) over an end-to-end encrypted relay — the server only ever sees scrambled bytes.</p>
+<div class="cta-row">
+<a class="btn" href="bubu.apk" download>Download APK</a>
+<a class="btn2" href="#screens">See the screens</a>
+</div>
+<p style="margin-top:8px;font-size:12px;color:var(--muted-fg)">PWA + APK · portrait-fluid · minSdk 24 · 2K wax seal</p>
+</div>
+<div class="phones" data-reveal-item>
+<div class="phone"><div class="notch"></div><img data-shot="today" src="showcase/today.webp" alt="Bubu Today screen — fertile window day 13 with cycle ring" width="780" height="1688"/></div>
+</div>
+</section>
+</div>
+<div class="trust" data-story-section><p data-reveal-item>Free forever · No account · Your diary stays yours</p></div>
+<div class="wrap">
+<section class="sec" id="screens" data-story-section>
+<p class="eyebrow">The tour</p><h2 data-split-reveal>Five screens, one soft rhythm.</h2>
+<p class="sub" data-reveal-item>Real screenshots from the app — scroll and the phone follows along.</p>
+<div class="tour" data-tour>
+<div class="tour-phone"><div class="giant"><img id="gA" src="showcase/today.webp" alt="Bubu app screenshot — changes with each step" width="780" height="1688"/><img id="gB" class="gB" src="showcase/today.webp" alt="" aria-hidden="true" width="780" height="1688"/></div></div>
+<div class="tour-steps">
+<article class="tour-step" data-tour-shot="today"><p class="n">01 / TODAY</p><h3>Today knows your phase.</h3><p class="sub">Cycle ring, next-period pill, quick-log chips. One glance, zero noise.</p></article>
+<article class="tour-step" data-tour-shot="calendar"><p class="n">02 / CALENDAR</p><h3>The month at a glance.</h3><p class="sub">Rose, teal and amber mark period, fertile and PMS. Tap any day to track.</p></article>
+<article class="tour-step" data-tour-shot="analysis"><p class="n">03 / ANALYSIS</p><h3>Patterns, not noise.</h3><p class="sub">Averages across cycles plus a doctor-ready report. Built on-device.</p></article>
+<article class="tour-step" data-tour-shot="learn"><p class="n">04 / LEARN</p><h3>Guides, not chatbots.</h3><p class="sub">13 written guides plus How to use Bubu, pinned. Educational, calm.</p></article>
+<article class="tour-step" data-tour-shot="partner"><p class="n">05 / TOGETHER</p><h3>Shared, view-only.</h3><p class="sub">A partner sees the full diary through encrypted auto-sync — never edits, never waits.</p></article>
+</div>
+</div>
+</section>
+<section class="sec" id="how" data-story-section><p class="eyebrow">How to use</p><h2 data-split-reveal>Four small steps.</h2>
+<div class="steps">
+<div class="card" data-reveal-item><b>1 — Plant your cloud</b><p>Tap “I track my cycle” → last period → average cycle.</p></div>
+<div class="card" data-reveal-item><b>2 — Daily 1-tap</b><p>QUICK LOG 6 chips or Log period. 4 essentials, Add more for sleep/BBT.</p></div>
+<div class="card" data-reveal-item><b>3 — See the rhythm</b><p>Calendar ring + Analysis 6-cycle avg + doctor report.</p></div>
+<div class="card" data-reveal-item><b>4 — Share privately</b><p>6-digit relay code, once. Auto-sync after that. View-only, Switch back restores.</p></div>
+</div></section>
+<section class="sec" id="why" data-story-section><p class="eyebrow">Why Bubu</p><h2 data-split-reveal>Yours, truly.</h2>
+<div class="why">
+<div class="card" data-reveal-item><b>Zero-knowledge</b><p>Preferences native / localStorage web, no account. Export backup.</p></div>
+<div class="card" data-reveal-item><b>Partner sync</b><p>Encrypted relay + file fallback. Server sees ciphertext only. Never auto-unlock.</p></div>
+<div class="card" data-reveal-item><b>4 modes + Learn</b><p>Period, Conceive, Pregnancy, Perimenopause + guides.</p></div>
+</div></section>
+</div>
+<footer data-footer-parallax><div class="foot-in">
+<span class="pill">Bubu</span>
+<span style="font-size:12px;color:var(--muted-fg)">On-device only · Not medical advice, not contraception.</span>
+<span class="mono">app.bubu.cycle · minSdk24 · gsap + lenis</span>
+</div>
+<div class="stickybar"><a href="bubu.apk" download>Download APK</a></div>
+</footer>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script>
+(function(){
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var themeBtn=document.getElementById("themeBtn");
+function apply(t){if(t==="dark")document.documentElement.classList.add("dark");else document.documentElement.classList.remove("dark")}
+function shotTheme(){return document.documentElement.classList.contains("dark")?"dark":"light"}
+function applyShots(){var t=shotTheme();document.querySelectorAll("img[data-shot]").forEach(function(im){var n="showcase/"+im.getAttribute("data-shot")+(t==="dark"?"-dark":"")+".webp";if(im.getAttribute("src")!==n)im.setAttribute("src",n)})}
+applyShots();
+if(themeBtn)themeBtn.addEventListener("click",function(){var d=document.documentElement.classList.contains("dark");var n=d?"light":"dark";try{localStorage.setItem("bubu-theme",n)}catch(e){}apply(n);applyShots();if(typeof tourSync==="function")tourSync();});
+var loader=document.getElementById("preloader"),bar=document.getElementById("preBar");
+function killLoader(){if(loader)loader.remove()}
+if(reduce||!window.gsap){killLoader();return}
+gsap.registerPlugin(ScrollTrigger);
+var lenis=null;
+try{
+lenis=new Lenis({lerp:0.08,smoothWheel:true,wheelMultiplier:0.9});
+lenis.on("scroll",ScrollTrigger.update);
+gsap.ticker.add(function(t){lenis.raf(t*1000)});
+gsap.ticker.lagSmoothing(0);
+}catch(e){lenis=null}
+function split(el){
+if(el.dataset.splitReady==="true")return;
+var text=el.textContent||"",parts=text.split(/(\s+)/);
+el.textContent="";el.setAttribute("aria-label",text.trim());
+parts.forEach(function(part){
+if(!part.trim()){el.appendChild(document.createTextNode(part));return}
+var m=document.createElement("span"),w=document.createElement("span");
+m.className="split-mask";w.className="split-w";w.textContent=part;m.setAttribute("aria-hidden","true");
+m.appendChild(w);el.appendChild(m);
+});
+el.dataset.splitReady="true";
+}
+var intro=gsap.timeline();
+intro.fromTo(bar,{scaleX:0,transformOrigin:"left"},{scaleX:1,duration:0.6,ease:"power3.out"})
+.to("#preloader",{yPercent:-100,duration:0.6,ease:"power4.inOut",onComplete:killLoader},"+=0.1");
+setTimeout(killLoader,2500);
+document.querySelectorAll("[data-split-reveal]").forEach(function(el){
+split(el);
+var words=el.querySelectorAll(".split-w");
+gsap.fromTo(words,{yPercent:110,autoAlpha:0,filter:"blur(8px)"},{yPercent:0,autoAlpha:1,filter:"blur(0px)",duration:0.95,ease:"power4.out",stagger:0.05,delay:1.0,
+scrollTrigger:{trigger:el,start:"top 88%",once:true}});
+});
+gsap.utils.toArray("[data-story-section]").forEach(function(sec){
+var items=sec.querySelectorAll("[data-reveal-item]"),targets=items.length?items:sec.children;
+gsap.fromTo(targets,{y:36,autoAlpha:0,filter:"blur(8px)"},{y:0,autoAlpha:1,filter:"blur(0px)",duration:1,ease:"power4.out",stagger:0.08,
+scrollTrigger:{trigger:sec,start:"top 82%",once:true}});
+});
+var tourCur="today";
+function tourSrc(n){return "showcase/"+n+(shotTheme()==="dark"?"-dark":"")+".webp"}
+function tourSync(){var a=document.getElementById("gA"),bb=document.getElementById("gB");if(a)a.src=tourSrc(tourCur);if(bb&&window.gsap)gsap.set(bb,{opacity:0})}
+if(document.querySelector("[data-tour]")){
+var gA=document.getElementById("gA"),gB=document.getElementById("gB"),tourToken=0,tourReady=false;
+(function(){
+if(!gA||!gB||!gA.decode){tourReady=true;return}
+var jobs=[];
+["today","calendar","analysis","learn","partner"].forEach(function(s){
+["","-dark"].forEach(function(t){var im=new Image();im.src="showcase/"+s+t+".webp";jobs.push(im.decode().catch(function(){}))});
+});
+Promise.all(jobs).then(function(){tourReady=true});
+})();
+function showShot(n){
+if(!gA||!gB)return;
+if(n===tourCur&&tourReady)return;
+if(reduce){tourCur=n;gA.src=tourSrc(n);tourReady=true;return}
+var my=++tourToken;
+tourCur=n;
+gsap.killTweensOf(gB);
+gsap.set(gB,{opacity:0});
+var target=tourSrc(n);
+function commit(){
+if(my!==tourToken)return;
+gB.src=target;
+gsap.fromTo(gB,{opacity:0},{opacity:1,duration:.4,ease:"power2.out",onComplete:function(){if(my!==tourToken)return;gA.src=target;gsap.set(gB,{opacity:0})}});
+}
+if(tourReady){commit()}
+else{var im=new Image();im.onload=function(){if(my===tourToken)commit()};im.src=target}
+}
+gsap.utils.toArray("[data-tour-shot]").forEach(function(step){
+ScrollTrigger.create({trigger:step,start:"top 58%",end:"bottom 58%",
+onToggle:function(self){if(self.isActive){step.classList.add("active");showShot(step.getAttribute("data-tour-shot"))}else{step.classList.remove("active")}}});
+});
+}
+gsap.utils.toArray("[data-parallax-layer]").forEach(function(layer){
+var sp=Number(layer.dataset.speed||-0.16),sec=layer.closest("[data-parallax-section]")||layer;
+gsap.to(layer,{y:function(){return innerHeight*sp},ease:"none",
+scrollTrigger:{trigger:sec,start:"top bottom",end:"bottom top",scrub:1,invalidateOnRefresh:true}});
+});
+var foot=document.querySelector("[data-footer-parallax]");
+if(foot)gsap.fromTo(foot,{yPercent:-12,autoAlpha:0.85},{yPercent:0,autoAlpha:1,ease:"none",
+scrollTrigger:{trigger:foot,start:"top bottom",end:"top 45%",scrub:1}});
+addEventListener("load",function(){ScrollTrigger.refresh();var other=shotTheme()==="dark"?"":"-dark";["today","calendar","analysis","learn","partner"].forEach(function(s){var i=new Image();i.src="showcase/"+s+other+".webp"})});
+})();
+</script>
+</body>
+</html>

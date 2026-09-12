@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-B-hcVAMW.js";import{t}from"./index-CFOWhQmU.js";import{t as n}from"./guide-list-CAjjoB64.js";var r=e();function i(){let{slug:e}=t.useParams();return(0,r.jsx)(n,{slug:e})}export{i as component};

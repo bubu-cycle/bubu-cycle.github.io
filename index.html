@@ -40,10 +40,12 @@ html.dark{
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
 body{margin:0;min-height:100dvh;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;
 background-image:radial-gradient(120% 60% at 50% 0%,color-mix(in oklab,var(--blush) 35%,transparent) 0%,transparent 60%),linear-gradient(180deg,var(--bg) 0%,color-mix(in oklab,var(--muted) 55%,var(--bg)) 100%);background-attachment:fixed}
+@media (hover:none){body{background-attachment:scroll}}
 html.dark body{background-image:radial-gradient(90% 45% at 50% -4%,color-mix(in oklab,var(--star) 16%,transparent) 0%,transparent 60%),linear-gradient(180deg,color-mix(in oklab,var(--card) 45%,var(--bg)) 0%,oklch(0.125 0.014 52) 100%);font-size:1.04rem;letter-spacing:.006em;line-height:1.65}
 html.dark body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;background-image:url("vintage-plate.jpg");background-size:cover;z-index:0}
 h1,h2{font-family:var(--disp);letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
-#preloader{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+#preloader{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;animation:preKill .5s ease 4.5s forwards}
+@keyframes preKill{to{opacity:0;visibility:hidden}}
 #preloader .bar{width:120px;height:2px;background:var(--border);overflow:hidden;border-radius:99px}
 #preloader .bar i{display:block;height:100%;width:100%;background:var(--primary);transform:scaleX(0);transform-origin:left}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
@@ -83,7 +85,13 @@ html.dark .tour-phone::before{background:radial-gradient(closest-side,color-mix(
 .giant{position:relative;width:min(100%,300px);border-radius:44px;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:0 40px 80px -32px rgba(0,0,0,.45)}
 html.dark .giant{border-color:color-mix(in oklab,var(--star) 42%,transparent);box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 60px -20px color-mix(in oklab,var(--star) 25%,transparent)}
 .giant img{display:block;width:100%;height:auto}
-.giant .gB{position:absolute;inset:0;opacity:0}
+.giant .gB{position:absolute;inset:0;opacity:0;transition:opacity .4s ease}
+.giant .gB.on{opacity:1}
+.step-shot{display:flex;justify-content:center;margin:0 0 14px}
+.step-shot .mini{width:min(100%,220px);border-radius:32px;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:0 24px 48px -24px rgba(0,0,0,.4)}
+.step-shot img{display:block;width:100%;height:auto}
+@media(max-width:899px){.tour-phone{display:none}}
+@media(min-width:900px){.step-shot{display:none}}
 .tour-step{display:flex;flex-direction:column;justify-content:center;padding:28px 4px;opacity:1}
 .tour-step.active{opacity:1}
 .tour-step .n{font-family:ui-monospace,monospace;font-size:11px;color:var(--muted-fg);letter-spacing:.14em}
@@ -158,11 +166,11 @@ a.btn:active,a.btn2:active{transform:scale(.98)}
 <div class="tour" data-tour>
 <div class="tour-phone"><div class="giant"><img id="gA" src="showcase/today.webp" alt="Bubu app screenshot — changes with each step" width="780" height="1688"/><img id="gB" class="gB" src="showcase/today.webp" alt="" aria-hidden="true" width="780" height="1688"/></div></div>
 <div class="tour-steps">
-<article class="tour-step" data-tour-shot="today"><p class="n">01 / TODAY</p><h3>Today knows your phase.</h3><p class="sub">Cycle ring, next-period pill, quick-log chips. One glance, zero noise.</p></article>
-<article class="tour-step" data-tour-shot="calendar"><p class="n">02 / CALENDAR</p><h3>The month at a glance.</h3><p class="sub">Rose, teal and amber mark period, fertile and PMS. Tap any day to track.</p></article>
-<article class="tour-step" data-tour-shot="analysis"><p class="n">03 / ANALYSIS</p><h3>Patterns, not noise.</h3><p class="sub">Averages across cycles plus a doctor-ready report. Built on-device.</p></article>
-<article class="tour-step" data-tour-shot="learn"><p class="n">04 / LEARN</p><h3>Guides, not chatbots.</h3><p class="sub">13 written guides plus How to use Bubu, pinned. Educational, calm.</p></article>
-<article class="tour-step" data-tour-shot="partner"><p class="n">05 / TOGETHER</p><h3>Shared, view-only.</h3><p class="sub">A partner sees the full diary through encrypted auto-sync — never edits, never waits.</p></article>
+<article class="tour-step" data-tour-shot="today"><div class="step-shot"><div class="mini"><img data-shot="today" src="showcase/today.webp" alt="Today — fertile window with cycle ring" width="780" height="1688" loading="lazy"/></div></div><p class="n">01 / TODAY</p><h3>Today knows your phase.</h3><p class="sub">Cycle ring, next-period pill, quick-log chips. One glance, zero noise.</p></article>
+<article class="tour-step" data-tour-shot="calendar"><div class="step-shot"><div class="mini"><img data-shot="calendar" src="showcase/calendar.webp" alt="Calendar — September month with phase dots" width="780" height="1688" loading="lazy"/></div></div><p class="n">02 / CALENDAR</p><h3>The month at a glance.</h3><p class="sub">Rose, teal and amber mark period, fertile and PMS. Tap any day to track.</p></article>
+<article class="tour-step" data-tour-shot="analysis"><div class="step-shot"><div class="mini"><img data-shot="analysis" src="showcase/analysis.webp" alt="Analysis — averages and patterns" width="780" height="1688" loading="lazy"/></div></div><p class="n">03 / ANALYSIS</p><h3>Patterns, not noise.</h3><p class="sub">Averages across cycles plus a doctor-ready report. Built on-device.</p></article>
+<article class="tour-step" data-tour-shot="learn"><div class="step-shot"><div class="mini"><img data-shot="learn" src="showcase/learn.webp" alt="Learn — gentle guides library" width="780" height="1688" loading="lazy"/></div></div><p class="n">04 / LEARN</p><h3>Guides, not chatbots.</h3><p class="sub">13 written guides plus How to use Bubu, pinned. Educational, calm.</p></article>
+<article class="tour-step" data-tour-shot="partner"><div class="step-shot"><div class="mini"><img data-shot="partner" src="showcase/partner.webp" alt="Partner — view-only sharing" width="780" height="1688" loading="lazy"/></div></div><p class="n">05 / TOGETHER</p><h3>Shared, view-only.</h3><p class="sub">A partner sees the full diary through encrypted auto-sync — never edits, never waits.</p></article>
 </div>
 </div>
 </section>
@@ -199,16 +207,38 @@ function shotTheme(){return document.documentElement.classList.contains("dark")?
 function applyShots(){var t=shotTheme();document.querySelectorAll("img[data-shot]").forEach(function(im){var n="showcase/"+im.getAttribute("data-shot")+(t==="dark"?"-dark":"")+".webp";if(im.getAttribute("src")!==n)im.setAttribute("src",n)})}
 applyShots();
 if(themeBtn)themeBtn.addEventListener("click",function(){var d=document.documentElement.classList.contains("dark");var n=d?"light":"dark";try{localStorage.setItem("bubu-theme",n)}catch(e){}apply(n);applyShots();if(typeof tourSync==="function")tourSync();});
+var tourCur="today",tourToken=0,tourReady=false;
+function tourSrc(n){return "showcase/"+n+(shotTheme()==="dark"?"-dark":"")+".webp"}
+function tourSync(){var a=document.getElementById("gA"),bb=document.getElementById("gB");if(a)a.src=tourSrc(tourCur);if(bb)bb.classList.remove("on")}
+(function(){
+var A0=document.getElementById("gA"),B0=document.getElementById("gB");
+if(A0&&B0&&A0.decode){var jobs=[],SHOTS=["today","calendar","analysis","learn","partner"],THEMES=["","-dark"],si,ti;for(si=0;si<SHOTS.length;si++){for(ti=0;ti<THEMES.length;ti++){var im=new Image();im.src="showcase/"+SHOTS[si]+THEMES[ti]+".webp";jobs.push(im.decode().catch(function(){}))}}Promise.all(jobs).then(function(){tourReady=true})}else{tourReady=true}
+function showShot(n){
+var A=document.getElementById("gA"),B=document.getElementById("gB");
+if(!A||!B)return;
+if(n===tourCur&&tourReady)return;
+if(reduce){tourCur=n;A.src=tourSrc(n);return}
+var my=++tourToken;tourCur=n;var target=tourSrc(n);
+function commit(){if(my!==tourToken)return;B.src=target;B.classList.remove("on");void B.offsetWidth;B.classList.add("on");clearTimeout(B._t);B._t=setTimeout(function(){if(my!==tourToken)return;A.src=target;B.classList.remove("on")},450)}
+if(tourReady){commit()}else{var im=new Image();im.onload=function(){if(my===tourToken)commit()};im.src=target}
+}
+if("IntersectionObserver" in window){
+var io2=new IntersectionObserver(function(es){es.forEach(function(e){var s=e.target;if(e.isIntersecting){s.classList.add("active");showShot(s.getAttribute("data-tour-shot"));}else{s.classList.remove("active");}});},{rootMargin:"-38% 0px -38% 0px"});
+document.querySelectorAll("[data-tour-shot]").forEach(function(s){io2.observe(s)});
+}
+})();
 var loader=document.getElementById("preloader"),bar=document.getElementById("preBar");
 function killLoader(){if(loader)loader.remove()}
 if(reduce||!window.gsap){killLoader();return}
 gsap.registerPlugin(ScrollTrigger);
 var lenis=null;
 try{
+if(matchMedia("(pointer:fine)").matches){
 lenis=new Lenis({lerp:0.08,smoothWheel:true,wheelMultiplier:0.9});
 lenis.on("scroll",ScrollTrigger.update);
 gsap.ticker.add(function(t){lenis.raf(t*1000)});
 gsap.ticker.lagSmoothing(0);
+}
 }catch(e){lenis=null}
 function split(el){
 if(el.dataset.splitReady==="true")return;
@@ -237,41 +267,7 @@ var items=sec.querySelectorAll("[data-reveal-item]"),targets=items.length?items:
 gsap.fromTo(targets,{y:36,autoAlpha:0,filter:"blur(8px)"},{y:0,autoAlpha:1,filter:"blur(0px)",duration:1,ease:"power4.out",stagger:0.08,
 scrollTrigger:{trigger:sec,start:"top 82%",once:true}});
 });
-var tourCur="today";
-function tourSrc(n){return "showcase/"+n+(shotTheme()==="dark"?"-dark":"")+".webp"}
-function tourSync(){var a=document.getElementById("gA"),bb=document.getElementById("gB");if(a)a.src=tourSrc(tourCur);if(bb&&window.gsap)gsap.set(bb,{opacity:0})}
-if(document.querySelector("[data-tour]")){
-var gA=document.getElementById("gA"),gB=document.getElementById("gB"),tourToken=0,tourReady=false;
-(function(){
-if(!gA||!gB||!gA.decode){tourReady=true;return}
-var jobs=[];
-["today","calendar","analysis","learn","partner"].forEach(function(s){
-["","-dark"].forEach(function(t){var im=new Image();im.src="showcase/"+s+t+".webp";jobs.push(im.decode().catch(function(){}))});
-});
-Promise.all(jobs).then(function(){tourReady=true});
-})();
-function showShot(n){
-if(!gA||!gB)return;
-if(n===tourCur&&tourReady)return;
-if(reduce){tourCur=n;gA.src=tourSrc(n);tourReady=true;return}
-var my=++tourToken;
-tourCur=n;
-gsap.killTweensOf(gB);
-gsap.set(gB,{opacity:0});
-var target=tourSrc(n);
-function commit(){
-if(my!==tourToken)return;
-gB.src=target;
-gsap.fromTo(gB,{opacity:0},{opacity:1,duration:.4,ease:"power2.out",onComplete:function(){if(my!==tourToken)return;gA.src=target;gsap.set(gB,{opacity:0})}});
-}
-if(tourReady){commit()}
-else{var im=new Image();im.onload=function(){if(my===tourToken)commit()};im.src=target}
-}
-gsap.utils.toArray("[data-tour-shot]").forEach(function(step){
-ScrollTrigger.create({trigger:step,start:"top 58%",end:"bottom 58%",
-onToggle:function(self){if(self.isActive){step.classList.add("active");showShot(step.getAttribute("data-tour-shot"))}else{step.classList.remove("active")}}});
-});
-}
+
 gsap.utils.toArray("[data-parallax-layer]").forEach(function(layer){
 var sp=Number(layer.dataset.speed||-0.16),sec=layer.closest("[data-parallax-section]")||layer;
 gsap.to(layer,{y:function(){return innerHeight*sp},ease:"none",
